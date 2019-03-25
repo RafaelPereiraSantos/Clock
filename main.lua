@@ -2,7 +2,9 @@ local clock = require("clock")
 
 local g = love.graphics
 
-local ck01 = clock.new(1, 30, 20, 400, 300)
+local now = os.date("*t")
+
+local ck01 = clock.new(now.hour, now.min, now.sec, 400, 300)
 
 function love.load()
 end

@@ -2,11 +2,6 @@ local vector = require("vector")
 
 local pointer = {}
 
-pointer.SECOND = 1
-pointer.MINUTE = 60 * pointer.SECOND
-pointer.HOUR = 60 * pointer.MINUTE
-pointer.DAY = 24 * pointer.HOUR
-
 function pointer.new(v, max_time_in_seconds, current_time_in_seconds, color)
   local new_pointer = {}
 

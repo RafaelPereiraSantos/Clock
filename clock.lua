@@ -3,6 +3,19 @@ local clock = {}
 local pointer = require("pointer")
 local vector = require("vector")
 
+clock.SECOND = 1
+clock.MINUTE = 60 * clock.SECOND
+clock.HOUR = 60 * clock.MINUTE
+clock.DAY = 12 * clock.HOUR -- 12 to work with analogic clock that doesn't has 24 numbers
+
+clock.minutes_to_seconds = function(minutes)
+  return minutes * clock.MINUTE
+end
+
+clock.hours_to_seconds = function(hours)
+  return hours * clock.HOUR
+end
+
 function clock.new(current_hour, current_minute, current_second, pos_x, pos_y)
   local new_clock = {}
 
@@ -10,13 +23,17 @@ function clock.new(current_hour, current_minute, current_second, pos_x, pos_y)
   new_clock.pos_y = pos_y
 
   local v = vector.new(pos_x, pos_y, 100, 0)
-  new_clock.second_pointer = pointer.new(v, pointer.MINUTE, current_second, { r=255, g=0, b=0 })
+  new_clock.second_pointer = pointer.new(v, clock.MINUTE, current_second, { r=255, g=0, b=0 })
 
   v = vector.new(pos_x, pos_y, 75, 0)
-  new_clock.minute_pointer = pointer.new(v, pointer.HOUR, current_minute, { r=0, g=255, b=0 })
+  new_clock.minute_pointer = pointer.new(v, clock.HOUR, clock.minutes_to_seconds(current_minute), { r=0, g=255, b=0 })
+
+  if current_hour > 12 then
+    current_hour =  current_hour % 12
+  end
 
   v = vector.new(pos_x, pos_y, 50, 0)
-  new_clock.hour_pointer = pointer.new(v, pointer.DAY, current_hour, { r=0, g=0, b=255 })
+  new_clock.hour_pointer = pointer.new(v, clock.DAY, clock.hours_to_seconds(current_hour), { r=0, g=0, b=255 })
 
   new_clock.update = function(self, dt)
     self.second_pointer:update(dt)

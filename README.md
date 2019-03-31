@@ -13,5 +13,5 @@ use it as you wish, and it would make me happy to know if you really do
 - [ ] Button to speed up time
 - [ ] Alarm
 - [ ] Buttons to change time
-- [ ] Analogic clock that works with 24 hours format changing its numbes aftet 12 o'clock from 13 to 24
+- [x] Analogic clock that works with 24 hours format changing its numbes aftet 12 o'clock from 13 to 24
 

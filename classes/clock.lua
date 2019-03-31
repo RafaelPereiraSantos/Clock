@@ -144,10 +144,6 @@ function clock.new.analog_clock(current_hour, current_minute, current_second, po
     self.hour_pointer:draw(g)
   end
 
-  new_clock.show_digital_time = function(self)
-    self.digital_version = true
-  end
-
   new_clock.change_time_factor = function(self, new_time_factor)
     self.time_factor = new_time_factor
   end

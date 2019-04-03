@@ -2,7 +2,7 @@ local clock = {}
 
 local pointer = require("classes.pointer")
 local vector = require("classes.vector")
-local object = require("classes.object")
+local object = require("classes.widget")
 local color = require("utils.color")
 
 clock.SECOND = 1

@@ -1,5 +1,5 @@
 local vector = require("classes.vector")
-local object = require("classes.object")
+local object = require("classes.widget")
 
 local pointer = {}
 

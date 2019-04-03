@@ -71,19 +71,23 @@ end
 function widget.new(pos_x, pos_y, width, height, object_to_hold)
   local new_widget = object.new(pos_x, pos_y, width, height)
 
-  new_widget.object_held = object_to_hold
+  new_widget.object_held = object_to_hold or nil
   new_widget.debugger_mode = false
 
   new_widget.update = function(self, dt)
-    self.object_held:update(dt)
+    if self:is_holding_something() then
+      self.object_held:update(dt)
+    end
   end
 
-  new_widget.draw = function(self, g)
-    self.object_held:draw(g)
+  new_widget.draw = function(self, gc)
+    if self:is_holding_something() then
+      self.object_held:draw(gc)
+    end
 
     if new_widget.debugger_mode then
-      g.setColor(color.YELLOW)
-      g.rectangle("line",self.pos_x, self.pos_y, self.width, self.height)
+      gc.setColor(color.YELLOW)
+      gc.rectangle("line",self.pos_x, self.pos_y, self.width, self.height)
     end
   end
 
@@ -98,7 +102,9 @@ function widget.new(pos_x, pos_y, width, height, object_to_hold)
     local new_x_pos = self.pos_x + (self.width / 2)
     local new_y_pos = self.pos_y + (self.height / 2)
 
-    self.object_held:change_position(new_x_pos, new_y_pos)
+    if self:is_holding_something() then
+      self.object_held:change_position(new_x_pos, new_y_pos)
+    end
   end
 
   new_widget.change_position_center_based = function(self, new_x_pos, new_y_pos)
@@ -117,6 +123,10 @@ function widget.new(pos_x, pos_y, width, height, object_to_hold)
 
   new_widget.after_change_position = function(self)
     new_widget:update_object_held_position()
+  end
+
+  new_widget.is_holding_something = function(self)
+    return self.object_held ~= nil
   end
 
   new_widget:update_object_held_position()
